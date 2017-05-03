@@ -18,7 +18,7 @@ public class TasksContract {
         public final String COLUMN_TASK_TITLE = "Task-title";
         public final String COLUMN_TASK_TIME_STAMP = "Task-time-stamp";
         public final String COLUMN_TASK_TIMER_DURATION = "Timer-duration";
-        public final String COLUMN_TASK_COMPLETE_TIME = "Task-complete-time";
+        public final String COLUMN_TASK_COMPLETE_TIME = "Task-completion-time";
     }
 
     // Constants for the Todo list table
