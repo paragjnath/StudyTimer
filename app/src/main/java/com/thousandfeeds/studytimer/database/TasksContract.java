@@ -26,6 +26,7 @@ public class TasksContract {
 
         public final String TODO_TABLE_NAME = "Todo-list";
         public final String COLUMN_TODO_TITLE = "Todo-title";
+        public final String COLUMN_TODO_TASK_ID = "task-id";
         public final String COLUMN_TODO_TIME_STAMP = "Todo-time-stamp";
 
     }
@@ -35,6 +36,7 @@ public class TasksContract {
 
         public final String NOTES_TABLE_NAME = "Notes";
         public final String COLUMN_NOTES_CONTENTS = "Notes-contents";
+        public final String COLUMN_NOTES_TASK_ID = "task-id";
         public final String COLUMN_NOTES_TIME_STAMP = "Notes-time-stamp";
     }
 
