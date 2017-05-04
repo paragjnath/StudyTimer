@@ -16,6 +16,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <provider
+            android:name=".database.TaskProvider"
+            android:authorities="com.thousandfeeds.studytimer"
+            android:exported="false" />
     </application>
 
 </manifest>
