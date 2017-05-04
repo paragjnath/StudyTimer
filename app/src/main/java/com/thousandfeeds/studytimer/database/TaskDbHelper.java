@@ -6,7 +6,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 /**
- * Class for creating updating reading and deleting database and its data.
+ * Class for creating updating and deleting the database.
  */
 
 public class TaskDbHelper extends SQLiteOpenHelper {
