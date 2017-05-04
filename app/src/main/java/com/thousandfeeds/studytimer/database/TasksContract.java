@@ -30,19 +30,19 @@ public final class TasksContract {
         public static final Uri CONTENT_URI = Uri.withAppendedPath(BASE_CONTENT_URI, PATH_TASKS);
 
         static final String TABLE_NAME = "Tasks";
-        static final String COLUMN_TASK_TITLE = "Task-title";
-        static final String COLUMN_TASK_TIMER_DURATION = "Timer-duration";
-        static final String COLUMN_TASK_COMPLETE_TIME = "Task-completion-time";
-        static final String COLUMN_TASK_TIME_STAMP = "Task-time-stamp";
+        static final String COLUMN_TASK_TITLE = "TaskTitle";
+        static final String COLUMN_TASK_TIMER_DURATION = "TimeDuration";
+        static final String COLUMN_TASK_COMPLETE_TIME = "TaskCompletionTime";
+        static final String COLUMN_TASK_TIME_STAMP = "TaskTimeStamp";
 
         /*
 
          CREATE TABLE Task (
          TaskId INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-         Task-title TEXT NOT NULL,
-         Timer-duration INTEGER,
-         Task-completion-time INTEGER,
-         Task-time-stamp INTEGER
+         TaskTitle TEXT NOT NULL,
+         TimerDuration INTEGER,
+         TaskCompletionTime INTEGER,
+         TaskTimeStamp INTEGER
          );
 
          */
@@ -53,17 +53,17 @@ public final class TasksContract {
 
         public static final Uri CONTENT_URI = Uri.withAppendedPath(BASE_CONTENT_URI, PATH_TODO_LIST);
 
-        static final String TODO_TABLE_NAME = "Todo-list";
-        static final String COLUMN_TODO_TITLE = "Todo-title";
-        static final String COLUMN_TODO_TASK_ID = "Task-id";
-        static final String COLUMN_TODO_TIME_STAMP = "Todo-time-stamp";
+        static final String TODO_TABLE_NAME = "TodoList";
+        static final String COLUMN_TODO_TITLE = "TodoTitle";
+        static final String COLUMN_TODO_TASK_ID = "TaskId";
+        static final String COLUMN_TODO_TIME_STAMP = "TodoTimeStamp";
 
         /*
          CREATE TABLE Todo-list (
          TodoId INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-         Todo-title TEXT NOT NULL,
-         Task-id INTEGER,
-         Todo-time-stamp INTEGER,
+         TodoTitle TEXT NOT NULL,
+         TaskId INTEGER,
+         TodoTimeStamp INTEGER,
          FOREIGN KEY(TaskId) REFERENCES Task (TaskId) ON DELETE NO ACTION ON UPDATE NO ACTION
          );
 
@@ -77,16 +77,16 @@ public final class TasksContract {
         public static final Uri CONTENT_URI = Uri.withAppendedPath(BASE_CONTENT_URI, PATH_NOTES);
 
         static final String NOTES_TABLE_NAME = "Notes";
-        static final String COLUMN_NOTE_CONTENTS = "Note-content";
-        static final String COLUMN_NOTE_TASK_ID = "Task-id";
-        static final String COLUMN_NOTE_TIME_STAMP = "Note-time-stamp";
+        static final String COLUMN_NOTE_CONTENTS = "NoteContent";
+        static final String COLUMN_NOTE_TASK_ID = "TaskId";
+        static final String COLUMN_NOTE_TIME_STAMP = "NoteTimeStamp";
 
         /*
          CREATE TABLE Notes (
          NotesId INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-         Notes-contents TEXT NOT NULL,
-         Task-id INTEGER,
-         Notes-time-stamp INTEGER,
+         NotesContents TEXT NOT NULL,
+         TaskId INTEGER,
+         NotesTimeStamp INTEGER,
          FOREIGN KEY(TaskId) REFERENCES Task (TaskId) ON DELETE NO ACTION ON UPDATE NO ACTION
          );
 

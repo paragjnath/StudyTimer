@@ -44,7 +44,7 @@ public class TaskDbHelper extends SQLiteOpenHelper {
             +TasksTable.TABLE_NAME+"("+TasksTable._ID+") ON DELETE NO ACTION ON UPDATE NO ACTION );"
             ;
 
-    public TaskDbHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
+    public TaskDbHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
