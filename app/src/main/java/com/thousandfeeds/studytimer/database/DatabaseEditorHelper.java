@@ -13,7 +13,7 @@ public class DatabaseEditorHelper {
     private DatabaseEditorHelper() {
     }
 
-    static Task insertTask(Task task, ContentResolver contentResolver){
+    public static Task insertTask(Task task, ContentResolver contentResolver){
 
         ContentValues values = new ContentValues();
         values.put(TasksTable.COLUMN_TASK_TITLE, task.getTaskTitle());

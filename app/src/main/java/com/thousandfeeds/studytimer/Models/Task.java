@@ -17,6 +17,14 @@ public class Task {
         TaskTimeStamp = taskTimeStamp;
     }
 
+    public Task() {
+        TaskId = "";
+        TaskTitle = "";
+        TimeDuration = "";
+        TaskCompletionTime = "";
+        TaskTimeStamp = "";
+    }
+
     public String getTaskId() {
         return TaskId;
     }
