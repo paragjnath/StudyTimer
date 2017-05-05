@@ -24,16 +24,16 @@ public final class TasksContract {
 
 
     // Constants for Main Task table.
-    static class TasksTable implements BaseColumns {
+    public static class TasksTable implements BaseColumns {
 
         /** The content URI to access the Task data in the provider */
         public static final Uri CONTENT_URI = Uri.withAppendedPath(BASE_CONTENT_URI, PATH_TASKS);
 
-        static final String TABLE_NAME = "Tasks";
-        static final String COLUMN_TASK_TITLE = "TaskTitle";
-        static final String COLUMN_TASK_TIMER_DURATION = "TimeDuration";
-        static final String COLUMN_TASK_COMPLETE_TIME = "TaskCompletionTime";
-        static final String COLUMN_TASK_TIME_STAMP = "TaskTimeStamp";
+        public static final String TABLE_NAME = "Tasks";
+        public static final String COLUMN_TASK_TITLE = "TaskTitle";
+        public static final String COLUMN_TASK_TIMER_DURATION = "TimeDuration";
+        public static final String COLUMN_TASK_COMPLETE_TIME = "TaskCompletionTime";
+        public static final String COLUMN_TASK_TIME_STAMP = "TaskTimeStamp";
 
         /*
 
@@ -49,14 +49,14 @@ public final class TasksContract {
     }
 
     // Constants for the Todo list table
-    static class ToDoListTable implements BaseColumns {
+    public static class ToDoListTable implements BaseColumns {
 
         public static final Uri CONTENT_URI = Uri.withAppendedPath(BASE_CONTENT_URI, PATH_TODO_LIST);
 
-        static final String TODO_TABLE_NAME = "TodoList";
-        static final String COLUMN_TODO_TITLE = "TodoTitle";
-        static final String COLUMN_TODO_TASK_ID = "TaskId";
-        static final String COLUMN_TODO_TIME_STAMP = "TodoTimeStamp";
+        public static final String TODO_TABLE_NAME = "TodoList";
+        public static final String COLUMN_TODO_TITLE = "TodoTitle";
+        public static final String COLUMN_TODO_TASK_ID = "TaskId";
+        public static final String COLUMN_TODO_TIME_STAMP = "TodoTimeStamp";
 
         /*
          CREATE TABLE Todo-list (
@@ -72,14 +72,14 @@ public final class TasksContract {
     }
 
     // Constants for the Notes table
-    static class NotesTable implements BaseColumns {
+    public static class NotesTable implements BaseColumns {
 
         public static final Uri CONTENT_URI = Uri.withAppendedPath(BASE_CONTENT_URI, PATH_NOTES);
 
-        static final String NOTES_TABLE_NAME = "Notes";
-        static final String COLUMN_NOTE_CONTENTS = "NoteContent";
-        static final String COLUMN_NOTE_TASK_ID = "TaskId";
-        static final String COLUMN_NOTE_TIME_STAMP = "NoteTimeStamp";
+        public static final String NOTES_TABLE_NAME = "Notes";
+        public static final String COLUMN_NOTE_CONTENTS = "NoteContent";
+        public static final String COLUMN_NOTE_TASK_ID = "TaskId";
+        public static final String COLUMN_NOTE_TIME_STAMP = "NoteTimeStamp";
 
         /*
          CREATE TABLE Notes (

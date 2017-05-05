@@ -64,7 +64,9 @@ public class TaskProvider extends ContentProvider {
 
     @Override
     public boolean onCreate() {
-        return false;
+
+        taskDbHelper = new TaskDbHelper(getContext());
+        return true;
     }
 
     @Nullable
