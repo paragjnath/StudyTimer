@@ -75,12 +75,15 @@ public class TaskProvider extends ContentProvider {
         SQLiteDatabase database = taskDbHelper.getReadableDatabase();
 
         //cursor to hold the result of the query
-        Cursor cursor = null;
+        Cursor cursor ;
 
         // Figure out if the URI matcher can match the URI to a specific code
         int match = sUriMatcher.match(uri);
         switch (match){
             case TASKS:
+
+                cursor = database.query(TasksTable.TABLE_NAME, projection, selection, selectionArgs,
+                        null, null, sortOrder);
 
                 break;
             case TASK_ID:
@@ -94,15 +97,33 @@ public class TaskProvider extends ContentProvider {
                 break;
             case TODO_LIST:
 
+                cursor = database.query(ToDoListTable.TODO_TABLE_NAME, projection, selection, selectionArgs,
+                        null, null, sortOrder);
+
                 break;
             case TODO_ID:
+
+                selection = ToDoListTable._ID + "=?";
+                selectionArgs = new String[] { String.valueOf(ContentUris.parseId(uri)) };
+
+                cursor = database.query(ToDoListTable.TODO_TABLE_NAME, projection, selection, selectionArgs,
+                        null, null, sortOrder);
 
                 break;
             case NOTES:
 
+                cursor = database.query(NotesTable.NOTES_TABLE_NAME, projection, selection, selectionArgs,
+                        null, null, sortOrder);
+
                 break;
 
             case NOTE_ID:
+
+                selection = NotesTable._ID + "=?";
+                selectionArgs = new String[] { String.valueOf(ContentUris.parseId(uri)) };
+
+                cursor = database.query(NotesTable.NOTES_TABLE_NAME, projection, selection, selectionArgs,
+                        null, null, sortOrder);
 
                 break;
             default:
