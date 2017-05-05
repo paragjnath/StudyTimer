@@ -9,6 +9,9 @@ import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.util.Log;
+
+import com.thousandfeeds.studytimer.StudyTimerHome;
 import com.thousandfeeds.studytimer.database.TasksContract.*;
 
 //Class for inserting and accessing data from the database.
@@ -82,52 +85,43 @@ public class TaskProvider extends ContentProvider {
         // Figure out if the URI matcher can match the URI to a specific code
         int match = sUriMatcher.match(uri);
         switch (match){
-            case TASKS:
 
+            case TASKS:
                 cursor = database.query(TasksTable.TABLE_NAME, projection, selection, selectionArgs,
                         null, null, sortOrder);
-
                 break;
-            case TASK_ID:
 
+            case TASK_ID:
                 selection = TasksTable._ID + "=?";
                 selectionArgs = new String[] { String.valueOf(ContentUris.parseId(uri)) };
-
                 cursor = database.query(TasksTable.TABLE_NAME, projection, selection, selectionArgs,
                         null, null, sortOrder);
-
                 break;
-            case TODO_LIST:
 
+            case TODO_LIST:
                 cursor = database.query(ToDoListTable.TODO_TABLE_NAME, projection, selection, selectionArgs,
                         null, null, sortOrder);
-
                 break;
-            case TODO_ID:
 
+            case TODO_ID:
                 selection = ToDoListTable._ID + "=?";
                 selectionArgs = new String[] { String.valueOf(ContentUris.parseId(uri)) };
-
                 cursor = database.query(ToDoListTable.TODO_TABLE_NAME, projection, selection, selectionArgs,
                         null, null, sortOrder);
-
                 break;
-            case NOTES:
 
+            case NOTES:
                 cursor = database.query(NotesTable.NOTES_TABLE_NAME, projection, selection, selectionArgs,
                         null, null, sortOrder);
-
                 break;
 
             case NOTE_ID:
-
                 selection = NotesTable._ID + "=?";
                 selectionArgs = new String[] { String.valueOf(ContentUris.parseId(uri)) };
-
                 cursor = database.query(NotesTable.NOTES_TABLE_NAME, projection, selection, selectionArgs,
                         null, null, sortOrder);
-
                 break;
+
             default:
                 throw new IllegalArgumentException("Cannot query unknown URI " + uri);
 
@@ -141,12 +135,20 @@ public class TaskProvider extends ContentProvider {
         return null;
     }
 
-    @Nullable
     @Override
-    public Uri insert(@NonNull Uri uri, @Nullable ContentValues contentValues) {
-        return null;
+    public Uri insert(Uri uri, ContentValues contentValues) {
+        final int match = sUriMatcher.match(uri);
+        switch (match) {
+            case TASKS:
+                return insertTask(uri, contentValues);
+            case TODO_LIST:
+                return insertTodo(uri, contentValues);
+            case NOTES:
+                return insertNotes(uri, contentValues);
+            default:
+                throw new IllegalArgumentException("Insertion is not supported for " + uri);
+        }
     }
-
     @Override
     public int delete(@NonNull Uri uri, @Nullable String s, @Nullable String[] strings) {
         return 0;
@@ -156,4 +158,47 @@ public class TaskProvider extends ContentProvider {
     public int update(@NonNull Uri uri, @Nullable ContentValues contentValues, @Nullable String s, @Nullable String[] strings) {
         return 0;
     }
+
+    private Uri insertTask(Uri uri, ContentValues contentValues){
+
+        //Get writable database
+        SQLiteDatabase database = taskDbHelper.getWritableDatabase();
+
+        long id = database.insert(TasksTable.TABLE_NAME,null,contentValues);
+        if (id == -1) {
+            Log.e("TaskProvider", "Failed to insert row for " + uri);
+            return null;
+        }
+        // Return the new URI with the ID (of the newly inserted row) appended at the end
+        return ContentUris.withAppendedId(uri, id);
+    }
+
+    private Uri insertTodo(Uri uri, ContentValues contentValues){
+
+        //Get writable database
+        SQLiteDatabase database = taskDbHelper.getWritableDatabase();
+
+        long id = database.insert(ToDoListTable.TODO_TABLE_NAME, null, contentValues);
+        if (id == -1) {
+            Log.e("TaskProvider", "Failed to insert row for " + uri);
+            return null;
+        }
+        // Return the new URI with the ID (of the newly inserted row) appended at the end
+        return ContentUris.withAppendedId(uri, id);
+    }
+
+    private Uri insertNotes(Uri uri, ContentValues contentValues){
+
+        //Get writable database
+        SQLiteDatabase database = taskDbHelper.getWritableDatabase();
+
+        long id = database.insert(NotesTable.NOTES_TABLE_NAME, null, contentValues);
+        if (id == -1) {
+            Log.e("TaskProvider", "Failed to insert row for " + uri);
+            return null;
+        }
+        // Return the new URI with the ID (of the newly inserted row) appended at the end
+        return ContentUris.withAppendedId(uri, id);
+    }
+
 }
