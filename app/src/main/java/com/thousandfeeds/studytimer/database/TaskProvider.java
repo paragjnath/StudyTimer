@@ -1,12 +1,15 @@
 package com.thousandfeeds.studytimer.database;
 
 import android.content.ContentProvider;
+import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.UriMatcher;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import com.thousandfeeds.studytimer.database.TasksContract.*;
 
 //Class for inserting and accessing data from the database.
 
@@ -37,6 +40,8 @@ public class TaskProvider extends ContentProvider {
      */
     private static final UriMatcher sUriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
 
+    TaskDbHelper taskDbHelper;
+
     // Static initializer. This is run the first time anything is called from this class.
     static {
         // The calls to addURI() go here, for all of the content URI patterns that the provider
@@ -64,8 +69,47 @@ public class TaskProvider extends ContentProvider {
 
     @Nullable
     @Override
-    public Cursor query(@NonNull Uri uri, @Nullable String[] strings, @Nullable String s, @Nullable String[] strings1, @Nullable String s1) {
-        return null;
+    public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
+
+        //Get readable database
+        SQLiteDatabase database = taskDbHelper.getReadableDatabase();
+
+        //cursor to hold the result of the query
+        Cursor cursor = null;
+
+        // Figure out if the URI matcher can match the URI to a specific code
+        int match = sUriMatcher.match(uri);
+        switch (match){
+            case TASKS:
+
+                break;
+            case TASK_ID:
+
+                selection = TasksTable._ID + "=?";
+                selectionArgs = new String[] { String.valueOf(ContentUris.parseId(uri)) };
+
+                cursor = database.query(TasksTable.TABLE_NAME, projection, selection, selectionArgs,
+                        null, null, sortOrder);
+
+                break;
+            case TODO_LIST:
+
+                break;
+            case TODO_ID:
+
+                break;
+            case NOTES:
+
+                break;
+
+            case NOTE_ID:
+
+                break;
+            default:
+                throw new IllegalArgumentException("Cannot query unknown URI " + uri);
+
+        }
+        return cursor;
     }
 
     @Nullable
