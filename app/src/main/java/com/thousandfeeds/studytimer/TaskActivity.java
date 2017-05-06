@@ -23,6 +23,9 @@ public class TaskActivity extends AppCompatActivity  implements LoaderManager.Lo
         setContentView(R.layout.activity_task);
         Intent intent = getIntent();
         currentTaskUri = intent.getData();
+
+        // Kick off the loader
+        getSupportLoaderManager().initLoader(TASK_LOADER_ID, null, this);
     }
 
     @Override
