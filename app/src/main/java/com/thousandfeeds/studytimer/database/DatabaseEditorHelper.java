@@ -9,17 +9,22 @@ import android.util.Log;
 import com.thousandfeeds.studytimer.Models.Task;
 import com.thousandfeeds.studytimer.database.TasksContract.*;
 
+import java.util.Calendar;
+
 public class DatabaseEditorHelper {
     private DatabaseEditorHelper() {
     }
 
     public static Task insertTask(Task task, ContentResolver contentResolver){
 
+        Calendar c = Calendar.getInstance();
+        long time = c.getTimeInMillis();
+
         ContentValues values = new ContentValues();
         values.put(TasksTable.COLUMN_TASK_TITLE, task.getTaskTitle());
         values.put(TasksTable.COLUMN_TASK_TIMER_DURATION, task.getTaskTitle());
         values.put(TasksTable.COLUMN_TASK_COMPLETE_TIME, task.getTaskCompletionTime());
-        values.put(TasksTable.COLUMN_TASK_TIME_STAMP, task.getTaskTimeStamp());
+        values.put(TasksTable.COLUMN_TASK_TIME_STAMP, time);
 
         Uri newUri = contentResolver.insert(TasksTable.CONTENT_URI, values);
         task.setTaskId(newUri.getLastPathSegment());
