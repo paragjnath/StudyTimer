@@ -3,6 +3,7 @@ package com.thousandfeeds.studytimer.fragments;
 import android.content.Context;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
@@ -33,7 +34,6 @@ public class TodoFragment extends Fragment implements LoaderManager.LoaderCallba
     private OnListFragmentInteractionListener mListener;
     private Cursor cursor;
     private MyTodoRecyclerViewAdapter todoAdapter;
-    RecyclerView recyclerView;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -71,12 +71,14 @@ public class TodoFragment extends Fragment implements LoaderManager.LoaderCallba
         // Set the adapter
         if (view instanceof RecyclerView) {
             Context context = view.getContext();
+            RecyclerView recyclerView;
             recyclerView = (RecyclerView) view;
             if (mColumnCount <= 1) {
                 recyclerView.setLayoutManager(new LinearLayoutManager(context));
             } else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
+            todoAdapter = new MyTodoRecyclerViewAdapter(cursor, mListener);
             recyclerView.setAdapter(todoAdapter);
         }
         return view;
@@ -92,6 +94,16 @@ public class TodoFragment extends Fragment implements LoaderManager.LoaderCallba
             throw new RuntimeException(context.toString()
                     + " must implement OnListFragmentInteractionListener");
         }
+
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        // Prepare the loader.  Either re-connect with an existing one,
+        // or start a new one.
+        getLoaderManager().initLoader(0, null, this);
     }
 
     @Override
@@ -121,8 +133,7 @@ public class TodoFragment extends Fragment implements LoaderManager.LoaderCallba
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
 
-        todoAdapter = new MyTodoRecyclerViewAdapter(cursor, mListener);
-        recyclerView.setAdapter(todoAdapter);
+        todoAdapter.swapCursor(data);
     }
 
     @Override

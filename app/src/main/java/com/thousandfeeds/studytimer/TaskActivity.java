@@ -10,8 +10,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.thousandfeeds.studytimer.database.TasksContract;
+import com.thousandfeeds.studytimer.fragments.TodoFragment;
 
-public class TaskActivity extends AppCompatActivity  implements LoaderManager.LoaderCallbacks<Cursor> {
+public class TaskActivity extends AppCompatActivity  implements LoaderManager.LoaderCallbacks<Cursor> , TodoFragment.OnListFragmentInteractionListener {
 
     Uri currentTaskUri;
     public static final int TASK_LOADER_ID =1;
@@ -71,6 +72,11 @@ public class TaskActivity extends AppCompatActivity  implements LoaderManager.Lo
 
     @Override
     public void onLoaderReset(Loader<Cursor> loader) {
+
+    }
+
+    @Override
+    public void onListFragmentInteraction(Cursor cursor) {
 
     }
 }
