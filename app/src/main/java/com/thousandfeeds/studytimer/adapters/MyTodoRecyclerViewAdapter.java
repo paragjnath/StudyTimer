@@ -38,9 +38,11 @@ public class MyTodoRecyclerViewAdapter extends RecyclerView.Adapter<MyTodoRecycl
         /*holder.mItem = mValues.get(position);
         holder.mIdView.setText(mValues.get(position).id);
         holder.mContentView.setText(mValues.get(position).content);*/
-        mCursor.move(position);
         int titleIndex = mCursor.getColumnIndex(TasksContract.ToDoListTable.COLUMN_TODO_TITLE);
         int timeStampIndex = mCursor.getColumnIndex(TasksContract.ToDoListTable.COLUMN_TODO_TIME_STAMP);
+
+        mCursor.moveToPosition(position);
+
         holder.mIdView.setText(mCursor.getString(titleIndex));
         holder.mContentView.setText(mCursor.getString(timeStampIndex));
 
@@ -58,7 +60,10 @@ public class MyTodoRecyclerViewAdapter extends RecyclerView.Adapter<MyTodoRecycl
 
     @Override
     public int getItemCount() {
-        return mCursor.getCount() ;
+        if (mCursor == null) {
+            return 0;
+        }
+        return mCursor.getCount();
     }
 
     /**
