@@ -1,4 +1,4 @@
-package com.thousandfeeds.studytimer.fragments;
+package com.thousandfeeds.studytimer.adapters;
 
 import android.database.Cursor;
 import android.support.v7.widget.RecyclerView;
@@ -10,18 +10,15 @@ import android.widget.TextView;
 import com.thousandfeeds.studytimer.R;
 import com.thousandfeeds.studytimer.database.TasksContract;
 import com.thousandfeeds.studytimer.fragments.TodoFragment.OnListFragmentInteractionListener;
-import com.thousandfeeds.studytimer.fragments.dummy.DummyContent.DummyItem;
-
-import java.util.List;
 
 /**
- * {@link RecyclerView.Adapter} that can display a {@link DummyItem} and makes a call to the
+ * {@link RecyclerView.Adapter} that can display a todoitem and makes a call to the
  * specified {@link OnListFragmentInteractionListener}.
  * TODO: Replace the implementation with code for your data type.
  */
 public class MyTodoRecyclerViewAdapter extends RecyclerView.Adapter<MyTodoRecyclerViewAdapter.ViewHolder> {
 
-    private final Cursor mCursor;
+    private Cursor mCursor;
     private final OnListFragmentInteractionListener mListener;
 
     public MyTodoRecyclerViewAdapter(Cursor items, OnListFragmentInteractionListener listener) {
@@ -53,7 +50,7 @@ public class MyTodoRecyclerViewAdapter extends RecyclerView.Adapter<MyTodoRecycl
                 if (null != mListener) {
                     // Notify the active callbacks interface (the activity, if the
                     // fragment is attached to one) that an item has been selected.
-                    mListener.onListFragmentInteraction(holder.mItem);
+                    mListener.onListFragmentInteraction(mCursor);
                 }
             }
         });
@@ -64,11 +61,29 @@ public class MyTodoRecyclerViewAdapter extends RecyclerView.Adapter<MyTodoRecycl
         return mCursor.getCount() ;
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
-        public final View mView;
-        public final TextView mIdView;
-        public final TextView mContentView;
-        public DummyItem mItem;
+    /**
+     * When data changes and a re-query occurs, this function swaps the old Cursor
+     * with a newly updated Cursor (Cursor c) that is passed in.
+     */
+    public Cursor swapCursor(Cursor c) {
+        // check if this cursor is the same as the previous cursor (mCursor)
+        if (mCursor == c) {
+            return null; // bc nothing has changed
+        }
+        Cursor temp = mCursor;
+        this.mCursor = c; // new cursor value assigned
+
+        //check if this is a valid cursor, then update the cursor
+        if (c != null) {
+            this.notifyDataSetChanged();
+        }
+        return temp;
+    }
+
+    class ViewHolder extends RecyclerView.ViewHolder {
+        View mView;
+        TextView mIdView;
+        TextView mContentView;
 
         public ViewHolder(View view) {
             super(view);

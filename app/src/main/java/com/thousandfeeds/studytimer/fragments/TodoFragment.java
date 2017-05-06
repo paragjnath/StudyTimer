@@ -1,8 +1,12 @@
 package com.thousandfeeds.studytimer.fragments;
 
 import android.content.Context;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.CursorLoader;
+import android.support.v4.content.Loader;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -11,10 +15,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.thousandfeeds.studytimer.R;
-import com.thousandfeeds.studytimer.fragments.dummy.DummyContent;
-import com.thousandfeeds.studytimer.fragments.dummy.DummyContent.DummyItem;
-
-import java.util.List;
+import com.thousandfeeds.studytimer.adapters.MyTodoRecyclerViewAdapter;
+import com.thousandfeeds.studytimer.database.TasksContract;
 
 /**
  * A fragment representing a list of Items.
@@ -22,13 +24,16 @@ import java.util.List;
  * Activities containing this fragment MUST implement the {@link OnListFragmentInteractionListener}
  * interface.
  */
-public class TodoFragment extends Fragment {
+public class TodoFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor>{
 
     // TODO: Customize parameter argument names
     private static final String ARG_COLUMN_COUNT = "column-count";
     // TODO: Customize parameters
     private int mColumnCount = 1;
     private OnListFragmentInteractionListener mListener;
+    private Cursor cursor;
+    private MyTodoRecyclerViewAdapter todoAdapter;
+    RecyclerView recyclerView;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -54,6 +59,8 @@ public class TodoFragment extends Fragment {
         if (getArguments() != null) {
             mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
         }
+
+        cursor = null;
     }
 
     @Override
@@ -64,13 +71,13 @@ public class TodoFragment extends Fragment {
         // Set the adapter
         if (view instanceof RecyclerView) {
             Context context = view.getContext();
-            RecyclerView recyclerView = (RecyclerView) view;
+            recyclerView = (RecyclerView) view;
             if (mColumnCount <= 1) {
                 recyclerView.setLayoutManager(new LinearLayoutManager(context));
             } else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-            recyclerView.setAdapter(new MyTodoRecyclerViewAdapter(DummyContent.ITEMS, mListener));
+            recyclerView.setAdapter(todoAdapter);
         }
         return view;
     }
@@ -93,6 +100,38 @@ public class TodoFragment extends Fragment {
         mListener = null;
     }
 
+    @Override
+    public Loader<Cursor> onCreateLoader(int id, Bundle args) {
+
+        String[] projection = {
+                TasksContract.ToDoListTable._ID,
+                TasksContract.ToDoListTable.COLUMN_TODO_TITLE,
+                TasksContract.ToDoListTable.COLUMN_TODO_TASK_ID ,
+                TasksContract.ToDoListTable.COLUMN_TODO_TIME_STAMP ,
+        };
+        // This loader will execute the ContentProvider's query method on a background thread
+        return new CursorLoader(getContext(),   // Parent activity context
+                TasksContract.ToDoListTable.CONTENT_URI,   // Provider content URI to query
+                projection,             // Columns to include in the resulting Cursor
+                null,                   // No selection clause
+                null,                   // No selection arguments
+                null);
+    }
+
+    @Override
+    public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
+
+        todoAdapter = new MyTodoRecyclerViewAdapter(cursor, mListener);
+        recyclerView.setAdapter(todoAdapter);
+    }
+
+    @Override
+    public void onLoaderReset(Loader<Cursor> loader) {
+
+        todoAdapter.swapCursor(cursor);
+
+    }
+
     /**
      * This interface must be implemented by activities that contain this
      * fragment to allow an interaction in this fragment to be communicated
@@ -105,6 +144,6 @@ public class TodoFragment extends Fragment {
      */
     public interface OnListFragmentInteractionListener {
         // TODO: Update argument type and name
-        void onListFragmentInteraction(DummyItem item);
+        void onListFragmentInteraction(Cursor cursor);
     }
 }
