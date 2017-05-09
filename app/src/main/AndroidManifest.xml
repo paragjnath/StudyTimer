@@ -23,7 +23,8 @@
             android:exported="false" />
 
         <activity android:name=".TaskActivity" />
-        <activity android:name=".StudyTimerHome"></activity>
+        <activity android:name=".StudyTimerHome" />
+        <activity android:name=".TopicActivity"></activity>
     </application>
 
 </manifest>
