@@ -16,11 +16,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.thousandfeeds.studytimer.database.TasksContract;
-import com.thousandfeeds.studytimer.fragments.TodoFragment;
+import com.thousandfeeds.studytimer.fragments.StepsFragment;
 
 import java.util.Calendar;
 
-public class TaskActivity extends AppCompatActivity  implements LoaderManager.LoaderCallbacks<Cursor> , TodoFragment.OnListFragmentInteractionListener {
+public class TaskActivity extends AppCompatActivity  implements LoaderManager.LoaderCallbacks<Cursor> , StepsFragment.OnListFragmentInteractionListener {
 
     Uri currentTaskUri;
     public static final int TASK_LOADER_ID =1;

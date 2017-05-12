@@ -9,19 +9,19 @@ import android.widget.TextView;
 
 import com.thousandfeeds.studytimer.R;
 import com.thousandfeeds.studytimer.database.TasksContract;
-import com.thousandfeeds.studytimer.fragments.StepsFragment.OnListFragmentInteractionListener;
+import com.thousandfeeds.studytimer.fragments.NotesFragment.OnListFragmentInteractionListener;
 
 /**
  * {@link RecyclerView.Adapter} that can display a todoitem and makes a call to the
  * specified {@link OnListFragmentInteractionListener}.
  * TODO: Replace the implementation with code for your data type.
  */
-public class MyTodoRecyclerViewAdapter extends RecyclerView.Adapter<MyTodoRecyclerViewAdapter.ViewHolder> {
+public class MyNotesRecyclerViewAdapter extends RecyclerView.Adapter<MyNotesRecyclerViewAdapter.ViewHolder> {
 
     private Cursor mCursor;
     private final OnListFragmentInteractionListener mListener;
 
-    public MyTodoRecyclerViewAdapter(Cursor items, OnListFragmentInteractionListener listener) {
+    public MyNotesRecyclerViewAdapter(Cursor items, OnListFragmentInteractionListener listener) {
         mCursor = items;
         mListener = listener;
     }

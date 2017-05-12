@@ -16,7 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.thousandfeeds.studytimer.R;
-import com.thousandfeeds.studytimer.adapters.MyTodoRecyclerViewAdapter;
+import com.thousandfeeds.studytimer.adapters.MyDoubtsRecyclerViewAdapter;
 import com.thousandfeeds.studytimer.database.TasksContract;
 
 /**
@@ -25,7 +25,7 @@ import com.thousandfeeds.studytimer.database.TasksContract;
  * Activities containing this fragment MUST implement the {@link OnListFragmentInteractionListener}
  * interface.
  */
-public class TodoFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor>{
+public class DoubtsFragment extends Fragment implements  LoaderManager.LoaderCallbacks<Cursor>{
 
     // TODO: Customize parameter argument names
     private static final String ARG_COLUMN_COUNT = "column-count";
@@ -33,19 +33,19 @@ public class TodoFragment extends Fragment implements LoaderManager.LoaderCallba
     private int mColumnCount = 1;
     private OnListFragmentInteractionListener mListener;
     private Cursor cursor;
-    private MyTodoRecyclerViewAdapter todoAdapter;
+    private MyDoubtsRecyclerViewAdapter doubtsAdapter;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
      * fragment (e.g. upon screen orientation changes).
      */
-    public TodoFragment() {
+    public DoubtsFragment() {
     }
 
     // TODO: Customize parameter initialization
     @SuppressWarnings("unused")
-    public static TodoFragment newInstance(int columnCount) {
-        TodoFragment fragment = new TodoFragment();
+    public static DoubtsFragment newInstance(int columnCount) {
+        DoubtsFragment fragment = new DoubtsFragment();
         Bundle args = new Bundle();
         args.putInt(ARG_COLUMN_COUNT, columnCount);
         fragment.setArguments(args);
@@ -78,8 +78,8 @@ public class TodoFragment extends Fragment implements LoaderManager.LoaderCallba
             } else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-            todoAdapter = new MyTodoRecyclerViewAdapter(cursor, mListener);
-            recyclerView.setAdapter(todoAdapter);
+            doubtsAdapter = new MyDoubtsRecyclerViewAdapter(cursor, mListener);
+            recyclerView.setAdapter(doubtsAdapter);
         }
         return view;
     }
@@ -133,13 +133,13 @@ public class TodoFragment extends Fragment implements LoaderManager.LoaderCallba
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
 
-        todoAdapter.swapCursor(data);
+        doubtsAdapter.swapCursor(data);
     }
 
     @Override
     public void onLoaderReset(Loader<Cursor> loader) {
 
-        todoAdapter.swapCursor(cursor);
+        doubtsAdapter.swapCursor(cursor);
 
     }
 
