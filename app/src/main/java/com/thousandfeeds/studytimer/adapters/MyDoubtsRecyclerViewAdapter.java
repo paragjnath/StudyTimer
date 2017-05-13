@@ -1,6 +1,7 @@
 package com.thousandfeeds.studytimer.adapters;
 
 import android.database.Cursor;
+import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,6 +20,7 @@ import com.thousandfeeds.studytimer.fragments.DoubtsFragment.*;
 public class MyDoubtsRecyclerViewAdapter extends RecyclerView.Adapter<MyDoubtsRecyclerViewAdapter.ViewHolder> {
 
     private Cursor mCursor;
+    private Uri uri;
     private OnListFragmentInteractionListener mListener;
 
     public MyDoubtsRecyclerViewAdapter(Cursor items, OnListFragmentInteractionListener listener) {
@@ -52,7 +54,7 @@ public class MyDoubtsRecyclerViewAdapter extends RecyclerView.Adapter<MyDoubtsRe
                 if (null != mListener) {
                     // Notify the active callbacks interface (the activity, if the
                     // fragment is attached to one) that an item has been selected.
-                    mListener.onListFragmentInteraction(mCursor);
+                    mListener.onListFragmentInteraction(uri);
                 }
             }
         });

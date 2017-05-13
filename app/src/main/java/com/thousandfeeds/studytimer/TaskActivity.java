@@ -104,14 +104,7 @@ public class TaskActivity extends AppCompatActivity  implements LoaderManager.Lo
     }
 
     @Override
-    public void onListFragmentInteraction(Cursor cursor) {
-
-        if(cursor.moveToFirst()) {
-
-            String toast = cursor.getString(cursor.getColumnIndex(TasksContract.ToDoListTable.COLUMN_TODO_TITLE));
-
-            Toast.makeText(getApplicationContext(), toast, Toast.LENGTH_SHORT).show();
-        }
+    public void onListFragmentInteraction(Uri uri) {
 
     }
 

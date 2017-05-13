@@ -1,6 +1,8 @@
 package com.thousandfeeds.studytimer;
 
+import android.content.Intent;
 import android.database.Cursor;
+import android.net.Uri;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -9,6 +11,9 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.thousandfeeds.studytimer.fragments.DoubtsFragment;
 import com.thousandfeeds.studytimer.fragments.NotesFragment;
@@ -23,20 +28,39 @@ public class TopicActivity extends AppCompatActivity implements StepsFragment.On
     private Toolbar mToolbar;
     private ViewPager mViewPager;
     private TabLayout mTabLayout;
+    private Uri currentTopicUri;
+    private String currentTopicId;
+    private TextView toolbarTitle;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState)  {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_topic);
+        Intent intent = getIntent();
+        currentTopicUri = intent.getData();
+        currentTopicId = currentTopicUri.getLastPathSegment();
+        Toast.makeText(this,currentTopicId,Toast.LENGTH_SHORT).show();
 
         mToolbar = (Toolbar) findViewById(R.id.toolBar);
+        setSupportActionBar(mToolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        toolbarTitle = (TextView) mToolbar.findViewById(R.id.toolbar_title);
         mViewPager = (ViewPager) findViewById(R.id.viewPager);
         mTabLayout = (TabLayout) findViewById(R.id.tabLayout);
 
         setupViewPager(mViewPager);
         mTabLayout.setupWithViewPager(mViewPager);
 
+
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.bottom_navigation_main,menu);
+        return super.onCreateOptionsMenu(menu);
 
     }
 
@@ -52,7 +76,7 @@ public class TopicActivity extends AppCompatActivity implements StepsFragment.On
     }
 
     @Override
-    public void onListFragmentInteraction(Cursor cursor) {
+    public void onListFragmentInteraction(Uri uri) {
 
     }
 

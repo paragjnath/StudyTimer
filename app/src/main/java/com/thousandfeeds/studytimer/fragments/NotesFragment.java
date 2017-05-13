@@ -2,6 +2,7 @@ package com.thousandfeeds.studytimer.fragments;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -155,6 +156,6 @@ public class NotesFragment extends Fragment implements  LoaderManager.LoaderCall
      */
     public interface OnListFragmentInteractionListener {
         // TODO: Update argument type and name
-        void onListFragmentInteraction(Cursor cursor);
+        void onListFragmentInteraction(Uri uri);
     }
 }

@@ -1,4 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
-
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/bottom_menu_topics"
+        android:enabled="true"
+        android:icon="@drawable/ic_task"
+        android:title="Topics"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/bottom_menu_notes"
+        android:enabled="true"
+        android:icon="@drawable/ic_notes"
+        android:title="Notes"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/bottom_menu_doubts"
+        android:enabled="true"
+        android:icon="@drawable/ic_doubts"
+        android:title="Doubts"
+        app:showAsAction="ifRoom" />
 </menu>

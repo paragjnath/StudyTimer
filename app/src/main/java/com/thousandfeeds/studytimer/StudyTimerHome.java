@@ -37,7 +37,8 @@ public class StudyTimerHome extends AppCompatActivity  implements LoaderManager.
         // Setup an Adapter to create a list item for each row of pet data in the Cursor.
         // There is no task data yet (until the loader finishes) so pass in null for the Cursor.
         mCursorAdapter = new TaskCursorAdapter(this, null);
-        taskListView.setAdapter(mCursorAdapter); taskListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        taskListView.setAdapter(mCursorAdapter);
+        taskListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
                 // Create new intent to go to {@link EditorActivity}
@@ -56,8 +57,6 @@ public class StudyTimerHome extends AppCompatActivity  implements LoaderManager.
                 startActivity(intent);
             }
         });
-
-
 
 
         // Kick off the loader
@@ -126,4 +125,6 @@ public class StudyTimerHome extends AppCompatActivity  implements LoaderManager.
         mCursorAdapter.swapCursor(null);
 
     }
+
+
 }

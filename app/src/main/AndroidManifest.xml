@@ -24,7 +24,15 @@
 
         <activity android:name=".TaskActivity" />
         <activity android:name=".StudyTimerHome" />
-        <activity android:name=".TopicActivity"></activity>
+        <activity
+            android:name=".TopicActivity"
+            android:parentActivityName="com.thousandfeeds.studytimer.MainActivity">
+
+            <!-- Parent activity meta-data to support 4.0 and lower -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.thousandfeeds.studytimer.MainActivity" />
+        </activity>
     </application>
 
 </manifest>

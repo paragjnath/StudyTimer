@@ -1,8 +1,15 @@
 package com.thousandfeeds.studytimer.fragments;
 
 import android.content.Context;
+import android.content.Intent;
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.CursorLoader;
+import android.support.v4.content.Loader;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -11,9 +18,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.thousandfeeds.studytimer.R;
-import com.thousandfeeds.studytimer.adapters.MyTopicRecyclerViewAdapter;
-import com.thousandfeeds.studytimer.fragments.dummy.DummyContent;
-import com.thousandfeeds.studytimer.fragments.dummy.DummyContent.DummyItem;
+import com.thousandfeeds.studytimer.TopicActivity;
+import com.thousandfeeds.studytimer.adapters.MyTopicsRecyclerViewAdapter;
+import com.thousandfeeds.studytimer.database.TasksContract;
 
 /**
  * A fragment representing a list of Items.
@@ -21,25 +28,27 @@ import com.thousandfeeds.studytimer.fragments.dummy.DummyContent.DummyItem;
  * Activities containing this fragment MUST implement the {@link OnListFragmentInteractionListener}
  * interface.
  */
-public class TopicFragment extends Fragment {
+public class TopicsFragment extends Fragment implements  LoaderManager.LoaderCallbacks<Cursor>{
 
     // TODO: Customize parameter argument names
     private static final String ARG_COLUMN_COUNT = "column-count";
     // TODO: Customize parameters
     private int mColumnCount = 1;
     private OnListFragmentInteractionListener mListener;
+    private Cursor cursor;
+    private MyTopicsRecyclerViewAdapter topicsAdapter;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
      * fragment (e.g. upon screen orientation changes).
      */
-    public TopicFragment() {
+    public TopicsFragment() {
     }
 
     // TODO: Customize parameter initialization
     @SuppressWarnings("unused")
-    public static TopicFragment newInstance(int columnCount) {
-        TopicFragment fragment = new TopicFragment();
+    public static TopicsFragment newInstance(int columnCount) {
+        TopicsFragment fragment = new TopicsFragment();
         Bundle args = new Bundle();
         args.putInt(ARG_COLUMN_COUNT, columnCount);
         fragment.setArguments(args);
@@ -53,6 +62,8 @@ public class TopicFragment extends Fragment {
         if (getArguments() != null) {
             mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
         }
+
+        cursor = null;
     }
 
     @Override
@@ -63,14 +74,20 @@ public class TopicFragment extends Fragment {
         // Set the adapter
         if (view instanceof RecyclerView) {
             Context context = view.getContext();
-            RecyclerView recyclerView = (RecyclerView) view;
+            RecyclerView recyclerView;
+            recyclerView = (RecyclerView) view;
             if (mColumnCount <= 1) {
                 recyclerView.setLayoutManager(new LinearLayoutManager(context));
             } else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-            recyclerView.setAdapter(new MyTopicRecyclerViewAdapter(DummyContent.ITEMS, mListener));
+            topicsAdapter = new MyTopicsRecyclerViewAdapter(cursor, mListener);
+            recyclerView.setAdapter(topicsAdapter);
+
         }
+
+
+
         return view;
     }
 
@@ -84,12 +101,56 @@ public class TopicFragment extends Fragment {
             throw new RuntimeException(context.toString()
                     + " must implement OnListFragmentInteractionListener");
         }
+
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        // Prepare the loader.  Either re-connect with an existing one,
+        // or start a new one.
+        getLoaderManager().initLoader(0, null, this);
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
         mListener = null;
+    }
+
+    @Override
+    public Loader<Cursor> onCreateLoader(int id, Bundle args) {
+
+
+        // This loader will execute the ContentProvider's query method on a background thread
+        String[] projection = {
+                TasksContract.TasksTable._ID,
+                TasksContract.TasksTable.COLUMN_TASK_TITLE,
+                TasksContract.TasksTable.COLUMN_TASK_TIMER_DURATION,
+                TasksContract.TasksTable.COLUMN_TASK_COMPLETE_TIME,
+                TasksContract.TasksTable.COLUMN_TASK_TIME_STAMP,
+        };
+        // This loader will execute the ContentProvider's query method on a background thread
+        return new CursorLoader(getContext(),   // Parent activity context
+                TasksContract.TasksTable.CONTENT_URI,   // Provider content URI to query
+                projection,             // Columns to include in the resulting Cursor
+                null,                   // No selection clause
+                null,                   // No selection arguments
+                null);
+    }
+
+    @Override
+    public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
+
+        topicsAdapter.swapCursor(data);
+    }
+
+    @Override
+    public void onLoaderReset(Loader<Cursor> loader) {
+
+        topicsAdapter.swapCursor(cursor);
+
     }
 
     /**
@@ -104,6 +165,6 @@ public class TopicFragment extends Fragment {
      */
     public interface OnListFragmentInteractionListener {
         // TODO: Update argument type and name
-        void onListFragmentInteraction(DummyItem item);
+        void onListFragmentInteraction(Uri uri);
     }
 }
