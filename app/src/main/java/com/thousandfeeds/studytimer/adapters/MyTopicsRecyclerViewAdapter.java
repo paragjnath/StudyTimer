@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.thousandfeeds.studytimer.R;
-import com.thousandfeeds.studytimer.database.TasksContract;
+import com.thousandfeeds.studytimer.database.TopicsContract;
 import com.thousandfeeds.studytimer.fragments.TopicsFragment.OnListFragmentInteractionListener;
 
 /**
@@ -40,8 +40,8 @@ public class MyTopicsRecyclerViewAdapter extends RecyclerView.Adapter<MyTopicsRe
         /*holder.mItem = mValues.get(position);
         holder.mIdView.setText(mValues.get(position).id);
         holder.mContentView.setText(mValues.get(position).content);*/
-        int titleIndex = mCursor.getColumnIndex(TasksContract.TasksTable.COLUMN_TASK_TITLE);
-        int timeStampIndex = mCursor.getColumnIndex(TasksContract.TasksTable.COLUMN_TASK_TIME_STAMP);
+        int titleIndex = mCursor.getColumnIndex(TopicsContract.TopicsTable.COLUMN_TOPIC_TITLE);
+        int timeStampIndex = mCursor.getColumnIndex(TopicsContract.TopicsTable.COLUMN_TOPIC_TIME_STAMP);
 
 
         mCursor.moveToPosition(position);
@@ -57,9 +57,9 @@ public class MyTopicsRecyclerViewAdapter extends RecyclerView.Adapter<MyTopicsRe
                     // Notify the active callbacks interface (the activity, if the
                     // fragment is attached to one) that an item has been selected.
                     mCursor.moveToPosition(position);
-                    int idIndex = mCursor.getColumnIndex(TasksContract.TasksTable._ID);
+                    int idIndex = mCursor.getColumnIndex(TopicsContract.TopicsTable._ID);
                     int id = mCursor.getInt(idIndex);
-                    Uri currentTopicUri = ContentUris.withAppendedId(TasksContract.TasksTable.CONTENT_URI, id);
+                    Uri currentTopicUri = ContentUris.withAppendedId(TopicsContract.TopicsTable.CONTENT_URI, id);
                     mListener.onListFragmentInteraction(currentTopicUri);
 
                 }

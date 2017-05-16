@@ -10,11 +10,7 @@ import android.widget.CursorAdapter;
 import android.widget.TextView;
 
 import com.thousandfeeds.studytimer.R;
-import com.thousandfeeds.studytimer.database.TasksContract;
-
-import java.sql.Date;
-import java.text.SimpleDateFormat;
-import java.text.StringCharacterIterator;
+import com.thousandfeeds.studytimer.database.TopicsContract;
 
 
 public class TaskCursorAdapter extends CursorAdapter {
@@ -60,8 +56,8 @@ public class TaskCursorAdapter extends CursorAdapter {
         TextView textViewId = (TextView) view.findViewById(R.id.textViewId);
 
         // Find the columns of task attributes that we're interested in
-        int titleColumnIndex = cursor.getColumnIndex(TasksContract.TasksTable.COLUMN_TASK_TITLE);
-        int idColumnIndex = cursor.getColumnIndex(TasksContract.TasksTable.COLUMN_TASK_TIME_STAMP);
+        int titleColumnIndex = cursor.getColumnIndex(TopicsContract.TopicsTable.COLUMN_TOPIC_TITLE);
+        int idColumnIndex = cursor.getColumnIndex(TopicsContract.TopicsTable._ID);
 
         // Read the task attributes from the Cursor for the current task
         String taskTitle = cursor.getString(titleColumnIndex);

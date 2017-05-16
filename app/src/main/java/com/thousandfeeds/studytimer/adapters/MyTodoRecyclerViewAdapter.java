@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.thousandfeeds.studytimer.R;
-import com.thousandfeeds.studytimer.database.TasksContract;
+import com.thousandfeeds.studytimer.database.TopicsContract;
 import com.thousandfeeds.studytimer.fragments.StepsFragment.OnListFragmentInteractionListener;
 
 /**
@@ -40,8 +40,8 @@ public class MyTodoRecyclerViewAdapter extends RecyclerView.Adapter<MyTodoRecycl
         /*holder.mItem = mValues.get(position);
         holder.mIdView.setText(mValues.get(position).id);
         holder.mContentView.setText(mValues.get(position).content);*/
-        int titleIndex = mCursor.getColumnIndex(TasksContract.ToDoListTable.COLUMN_TODO_TITLE);
-        int timeStampIndex = mCursor.getColumnIndex(TasksContract.ToDoListTable.COLUMN_TODO_TIME_STAMP);
+        int titleIndex = mCursor.getColumnIndex(TopicsContract.DoubtsTable.COLUMN_DOUBT_TITLE);
+        int timeStampIndex = mCursor.getColumnIndex(TopicsContract.DoubtsTable.COLUMN_DOUBT_TIME_STAMP);
 
         mCursor.moveToPosition(position);
 

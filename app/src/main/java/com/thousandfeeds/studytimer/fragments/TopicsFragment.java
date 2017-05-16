@@ -1,7 +1,6 @@
 package com.thousandfeeds.studytimer.fragments;
 
 import android.content.Context;
-import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
@@ -18,9 +17,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.thousandfeeds.studytimer.R;
-import com.thousandfeeds.studytimer.TopicActivity;
 import com.thousandfeeds.studytimer.adapters.MyTopicsRecyclerViewAdapter;
-import com.thousandfeeds.studytimer.database.TasksContract;
+import com.thousandfeeds.studytimer.database.TopicsContract;
 
 /**
  * A fragment representing a list of Items.
@@ -125,15 +123,13 @@ public class TopicsFragment extends Fragment implements  LoaderManager.LoaderCal
 
         // This loader will execute the ContentProvider's query method on a background thread
         String[] projection = {
-                TasksContract.TasksTable._ID,
-                TasksContract.TasksTable.COLUMN_TASK_TITLE,
-                TasksContract.TasksTable.COLUMN_TASK_TIMER_DURATION,
-                TasksContract.TasksTable.COLUMN_TASK_COMPLETE_TIME,
-                TasksContract.TasksTable.COLUMN_TASK_TIME_STAMP,
+                TopicsContract.TopicsTable._ID,
+                TopicsContract.TopicsTable.COLUMN_TOPIC_TITLE,
+                TopicsContract.TopicsTable.COLUMN_TOPIC_TIME_STAMP,
         };
         // This loader will execute the ContentProvider's query method on a background thread
         return new CursorLoader(getContext(),   // Parent activity context
-                TasksContract.TasksTable.CONTENT_URI,   // Provider content URI to query
+                TopicsContract.TopicsTable.CONTENT_URI,   // Provider content URI to query
                 projection,             // Columns to include in the resulting Cursor
                 null,                   // No selection clause
                 null,                   // No selection arguments

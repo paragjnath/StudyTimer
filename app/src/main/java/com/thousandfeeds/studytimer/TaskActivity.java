@@ -13,10 +13,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import com.thousandfeeds.studytimer.database.TasksContract;
+import com.thousandfeeds.studytimer.database.TopicsContract;
 import com.thousandfeeds.studytimer.fragments.StepsFragment;
+import com.thousandfeeds.studytimer.fragments.TopicsFragment;
 
 import java.util.Calendar;
 
@@ -50,11 +49,12 @@ public class TaskActivity extends AppCompatActivity  implements LoaderManager.Lo
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
 
         String[] projection = {
-                TasksContract.TasksTable._ID,
-                TasksContract.TasksTable.COLUMN_TASK_TITLE,
-                TasksContract.TasksTable.COLUMN_TASK_TIMER_DURATION ,
-                TasksContract.TasksTable.COLUMN_TASK_COMPLETE_TIME ,
-                TasksContract.TasksTable.COLUMN_TASK_TIME_STAMP ,
+                TopicsContract.TopicsTable._ID,
+                TopicsContract.TopicsTable.COLUMN_TOPIC_TITLE,
+                TopicsContract.TopicsTable.COLUMN_TOPIC_TIME_STAMP,
+                TopicsContract.TopicsTable.COLUMN_TOPIC_NO_OF_NOTES,
+                TopicsContract.TopicsTable.COLUMN_TOPIC_NO_OF_DOUBTS,
+
         };
         // This loader will execute the ContentProvider's query method on a background thread
         return new CursorLoader(this,   // Parent activity context
@@ -75,15 +75,11 @@ public class TaskActivity extends AppCompatActivity  implements LoaderManager.Lo
         if(cursor.moveToFirst()){
 
             // find the columns of the task attributes
-            int titleColumnIndex = cursor.getColumnIndex(TasksContract.TasksTable.COLUMN_TASK_TITLE);
-            int timerDurationColumnIndex = cursor.getColumnIndex(TasksContract.TasksTable.COLUMN_TASK_TITLE);
-            int completionTimeColumnIndex = cursor.getColumnIndex(TasksContract.TasksTable.COLUMN_TASK_TITLE);
-            int timeStampColumnIndex = cursor.getColumnIndex(TasksContract.TasksTable.COLUMN_TASK_TITLE);
+            int titleColumnIndex = cursor.getColumnIndex(TopicsContract.TopicsTable.COLUMN_TOPIC_TITLE);
+            int timeStampColumnIndex = cursor.getColumnIndex(TopicsContract.TopicsTable.COLUMN_TOPIC_TIME_STAMP);
 
             //get data from the columns
             String title = cursor.getString(titleColumnIndex);
-            String  timerDuration = cursor.getString(timerDurationColumnIndex);
-            long completionTime = cursor.getLong(completionTimeColumnIndex);
             long timeStamp = cursor.getLong(timeStampColumnIndex);
 
             //show data in view
@@ -116,11 +112,11 @@ public class TaskActivity extends AppCompatActivity  implements LoaderManager.Lo
         long time = c.getTimeInMillis();
 
         ContentValues values = new ContentValues();
-        values.put(TasksContract.ToDoListTable.COLUMN_TODO_TITLE, todoTitle);
-        values.put(TasksContract.ToDoListTable.COLUMN_TODO_TASK_ID, currentTaskId);
-        values.put(TasksContract.ToDoListTable.COLUMN_TODO_TIME_STAMP, time);
+        values.put(TopicsContract.DoubtsTable.COLUMN_DOUBT_TITLE, todoTitle);
+        values.put(TopicsContract.DoubtsTable.COLUMN_TOPIC_ID, currentTaskId);
+        values.put(TopicsContract.DoubtsTable.COLUMN_DOUBT_TIME_STAMP, time);
 
-        Uri newUri = getContentResolver().insert(TasksContract.ToDoListTable.CONTENT_URI, values);
+        Uri newUri = getContentResolver().insert(TopicsContract.DoubtsTable.CONTENT_URI, values);
 
     }
 }
