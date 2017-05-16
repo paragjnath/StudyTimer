@@ -74,7 +74,7 @@ public class TaskActivity extends AppCompatActivity  implements LoaderManager.Lo
         }
         if(cursor.moveToFirst()){
 
-            // find the columns of the task attributes
+            // find the columns of the topic attributes
             int titleColumnIndex = cursor.getColumnIndex(TopicsContract.TopicsTable.COLUMN_TOPIC_TITLE);
             int timeStampColumnIndex = cursor.getColumnIndex(TopicsContract.TopicsTable.COLUMN_TOPIC_TIME_STAMP);
 

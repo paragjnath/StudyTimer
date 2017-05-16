@@ -7,6 +7,9 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.CursorLoader;
+import android.support.v4.content.Loader;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -15,6 +18,7 @@ import android.view.Menu;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.thousandfeeds.studytimer.database.TopicsContract;
 import com.thousandfeeds.studytimer.fragments.DoubtsFragment;
 import com.thousandfeeds.studytimer.fragments.NotesFragment;
 import com.thousandfeeds.studytimer.fragments.StepsFragment;
@@ -22,7 +26,7 @@ import com.thousandfeeds.studytimer.fragments.StepsFragment;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TopicActivity extends AppCompatActivity implements StepsFragment.OnListFragmentInteractionListener ,
+public class TopicActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor>,StepsFragment.OnListFragmentInteractionListener ,
         DoubtsFragment.OnListFragmentInteractionListener, NotesFragment.OnListFragmentInteractionListener{
 
     private Toolbar mToolbar;
@@ -40,7 +44,6 @@ public class TopicActivity extends AppCompatActivity implements StepsFragment.On
         Intent intent = getIntent();
         currentTopicUri = intent.getData();
         currentTopicId = currentTopicUri.getLastPathSegment();
-        Toast.makeText(this,currentTopicId,Toast.LENGTH_SHORT).show();
 
         mToolbar = (Toolbar) findViewById(R.id.toolBar);
         setSupportActionBar(mToolbar);
@@ -53,6 +56,8 @@ public class TopicActivity extends AppCompatActivity implements StepsFragment.On
 
         setupViewPager(mViewPager);
         mTabLayout.setupWithViewPager(mViewPager);
+
+        getSupportLoaderManager().initLoader(0, null, this);
 
 
     }
@@ -77,6 +82,57 @@ public class TopicActivity extends AppCompatActivity implements StepsFragment.On
 
     @Override
     public void onListFragmentInteraction(Uri uri) {
+
+    }
+
+    @Override
+    public Loader<Cursor> onCreateLoader(int id, Bundle args) {
+
+        // This loader will execute the ContentProvider's query method on a background thread
+        String[] projection = {
+                TopicsContract.TopicsTable._ID,
+                TopicsContract.TopicsTable.COLUMN_TOPIC_TITLE,
+                TopicsContract.TopicsTable.COLUMN_TOPIC_TIME_STAMP,
+        };
+
+
+        // This loader will execute the ContentProvider's query method on a background thread
+        return new CursorLoader(this,   // Parent activity context
+                currentTopicUri,   // Provider content URI to query
+                projection,             // Columns to include in the resulting Cursor
+                null,                   // No selection clause
+                null,                   // No selection arguments
+                null);
+    }
+
+    @Override
+    public void onLoadFinished(Loader<Cursor> loader, Cursor cursor) {
+
+        // Bail early if the cursor is null or there is less than 1 row in the cursor
+        if (cursor == null || cursor.getCount() < 1) {
+
+            return;
+        }
+
+        if(cursor.moveToFirst()){
+
+            // find the columns of the topic attributes
+            int titleColumnIndex = cursor.getColumnIndex(TopicsContract.TopicsTable.COLUMN_TOPIC_TITLE);
+            //int timeStampColumnIndex = cursor.getColumnIndex(TopicsContract.TopicsTable.COLUMN_TOPIC_TIME_STAMP);
+
+            //get data from the columns
+            String title = cursor.getString(titleColumnIndex);
+            //long timeStamp = cursor.getLong(timeStampColumnIndex);
+
+            toolbarTitle.setText(title);
+            Toast.makeText(getApplicationContext(),"notnonono",Toast.LENGTH_SHORT).show();
+
+        }
+
+    }
+
+    @Override
+    public void onLoaderReset(Loader<Cursor> loader) {
 
     }
 
