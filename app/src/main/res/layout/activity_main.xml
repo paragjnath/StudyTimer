@@ -151,6 +151,7 @@
             android:layout_height="wrap_content">
             <EditText
                 android:layout_width="0dp"
+                android:id="@+id/addTopicEditText"
                 android:layout_weight="5"
                 android:layout_marginLeft="5dp"
                 android:background="@drawable/border"
@@ -163,7 +164,7 @@
             <Button
                 android:layout_width="0dp"
                 android:layout_weight="1"
-                android:id="@+id/addButton"
+                android:id="@+id/addTopicButton"
                 android:layout_height="wrap_content"
                 android:text="ADD"
                 android:layout_marginRight="5dp"/>
