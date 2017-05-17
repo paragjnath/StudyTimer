@@ -47,8 +47,8 @@ public class NotesFragment extends Fragment implements  LoaderManager.LoaderCall
 
     // TODO: Customize parameter initialization
     @SuppressWarnings("unused")
-    public static DoubtsFragment newInstance(int columnCount) {
-        DoubtsFragment fragment = new DoubtsFragment();
+    public static NotesFragment newInstance(int columnCount) {
+        NotesFragment fragment = new NotesFragment();
         Bundle args = new Bundle();
         args.putInt(ARG_COLUMN_COUNT, columnCount);
         fragment.setArguments(args);

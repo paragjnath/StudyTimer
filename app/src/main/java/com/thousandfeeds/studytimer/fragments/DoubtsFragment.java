@@ -35,6 +35,7 @@ public class DoubtsFragment extends Fragment implements  LoaderManager.LoaderCal
     private OnListFragmentInteractionListener mListener;
     private Cursor cursor;
     private MyDoubtsRecyclerViewAdapter doubtsAdapter;
+    private String currentTopicId;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -59,6 +60,7 @@ public class DoubtsFragment extends Fragment implements  LoaderManager.LoaderCal
 
         if (getArguments() != null) {
             mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
+            currentTopicId = this.getArguments().getString("TOPIC-ID");
         }
 
         cursor = null;
@@ -122,13 +124,28 @@ public class DoubtsFragment extends Fragment implements  LoaderManager.LoaderCal
                 TopicsContract.DoubtsTable.COLUMN_TOPIC_ID ,
                 TopicsContract.DoubtsTable.COLUMN_DOUBT_TIME_STAMP ,
         };
-        // This loader will execute the ContentProvider's query method on a background thread
-        return new CursorLoader(getContext(),   // Parent activity context
-                TopicsContract.DoubtsTable.CONTENT_URI,   // Provider content URI to query
-                projection,             // Columns to include in the resulting Cursor
-                null,                   // No selection clause
-                null,                   // No selection arguments
-                null);
+
+        if(currentTopicId !=null){
+
+            String selection = TopicsContract.DoubtsTable.COLUMN_TOPIC_ID + "=?";
+            String[] selectionArgs = new String[] { currentTopicId };
+
+            return new CursorLoader(getContext(),   // Parent activity context
+                    TopicsContract.DoubtsTable.CONTENT_URI,   // Provider content URI to query
+                    projection,             // Columns to include in the resulting Cursor
+                    selection,                   // selection clause
+                    selectionArgs,                   //selection arguments
+                    null);
+
+        }else{
+            // This loader will execute the ContentProvider's query method on a background thread
+            return new CursorLoader(getContext(),   // Parent activity context
+                    TopicsContract.DoubtsTable.CONTENT_URI,   // Provider content URI to query
+                    projection,             // Columns to include in the resulting Cursor
+                    null,                   // No selection clause
+                    null,                   // No selection arguments
+                    null);
+        }
     }
 
     @Override
