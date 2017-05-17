@@ -35,6 +35,7 @@ public class TopicActivity extends AppCompatActivity implements LoaderManager.Lo
     private Uri currentTopicUri;
     private String currentTopicId;
     private TextView toolbarTitle;
+    private Bundle mBundle;
 
 
     @Override
@@ -44,6 +45,9 @@ public class TopicActivity extends AppCompatActivity implements LoaderManager.Lo
         Intent intent = getIntent();
         currentTopicUri = intent.getData();
         currentTopicId = currentTopicUri.getLastPathSegment();
+
+        mBundle = new Bundle();
+        mBundle.putString("TOPIC-ID",currentTopicId);
 
         mToolbar = (Toolbar) findViewById(R.id.toolBar);
         setSupportActionBar(mToolbar);
@@ -155,6 +159,9 @@ public class TopicActivity extends AppCompatActivity implements LoaderManager.Lo
         }
 
         public void addFragment(Fragment fragment, String title) {
+
+            //send the current topic id to fragment
+            fragment.setArguments(mBundle);
             mFragmentList.add(fragment);
             mFragmentTitleList.add(title);
             notifyDataSetChanged();

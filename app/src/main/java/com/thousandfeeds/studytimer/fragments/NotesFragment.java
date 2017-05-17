@@ -12,6 +12,7 @@ import android.support.v4.content.Loader;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,6 +36,7 @@ public class NotesFragment extends Fragment implements  LoaderManager.LoaderCall
     private OnListFragmentInteractionListener mListener;
     private Cursor cursor;
     private MyNotesRecyclerViewAdapter notesAdapter;
+    private String currentTopicId;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -59,6 +61,7 @@ public class NotesFragment extends Fragment implements  LoaderManager.LoaderCall
 
         if (getArguments() != null) {
             mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
+            currentTopicId = this.getArguments().getString("TOPIC-ID");
         }
 
         cursor = null;
