@@ -35,6 +35,14 @@ public class MainActivity extends AppCompatActivity implements TopicsFragment.On
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
+        Fragment fragment = new TopicsFragment();
+        if(fragment != null){
+            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+            fragmentTransaction.replace(R.id.fragmentContainer, fragment, fragment.getTag());
+            fragmentTransaction.commit();
+        }
+
         addTopicEditText = (EditText) findViewById(R.id.addTopicEditText);
 
         addButton = (Button) findViewById(R.id.addTopicButton);

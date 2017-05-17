@@ -68,7 +68,7 @@
             fab:menu_colorRipple="#62B2FF">
 
             <com.github.clans.fab.FloatingActionButton
-                android:id="@+id/fab12"
+                android:id="@+id/fabAddStep"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_menu_camera"
@@ -76,7 +76,7 @@
                 style="@style/MenuButtonsGreen" />
 
             <com.github.clans.fab.FloatingActionButton
-                android:id="@+id/fab22"
+                android:id="@+id/fabAddNote"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_menu_manage"
@@ -84,7 +84,7 @@
                 style="@style/MenuButtonsGreen" />
 
             <com.github.clans.fab.FloatingActionButton
-                android:id="@+id/fab32"
+                android:id="@+id/fabAddDoubt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_menu_send"

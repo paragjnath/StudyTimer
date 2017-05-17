@@ -3,6 +3,8 @@ package com.thousandfeeds.studytimer;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
+import com.github.clans.fab.FloatingActionButton;
+import com.github.clans.fab.FloatingActionMenu;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -15,6 +17,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
+import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -36,6 +39,8 @@ public class TopicActivity extends AppCompatActivity implements LoaderManager.Lo
     private String currentTopicId;
     private TextView toolbarTitle;
     private Bundle mBundle;
+    private FloatingActionButton fabAddNote;
+    private FloatingActionMenu floatingActionMenu;
 
 
     @Override
@@ -62,6 +67,16 @@ public class TopicActivity extends AppCompatActivity implements LoaderManager.Lo
         mTabLayout.setupWithViewPager(mViewPager);
 
         getSupportLoaderManager().initLoader(0, null, this);
+
+        floatingActionMenu = (FloatingActionMenu) findViewById(R.id.menu_yellow);
+        fabAddNote = (FloatingActionButton) findViewById(R.id.fabAddNote);
+        fabAddNote.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(getApplicationContext(),"hello world",Toast.LENGTH_SHORT).show();
+                floatingActionMenu.close(true);
+            }
+        });
 
 
     }

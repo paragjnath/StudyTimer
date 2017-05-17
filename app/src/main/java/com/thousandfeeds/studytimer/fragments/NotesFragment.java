@@ -134,8 +134,8 @@ public class NotesFragment extends Fragment implements  LoaderManager.LoaderCall
             return new CursorLoader(getContext(),   // Parent activity context
                     TopicsContract.NotesTable.CONTENT_URI,   // Provider content URI to query
                     projection,             // Columns to include in the resulting Cursor
-                    selection,                   // No selection clause
-                    selectionArgs,                   // No selection arguments
+                    selection,                   // selection clause
+                    selectionArgs,                   //selection arguments
                     null);
 
         }else{
