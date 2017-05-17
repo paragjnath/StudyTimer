@@ -125,13 +125,29 @@ public class NotesFragment extends Fragment implements  LoaderManager.LoaderCall
                 TopicsContract.NotesTable.COLUMN_TOPIC_ID ,
                 TopicsContract.NotesTable.COLUMN_NOTE_TIME_STAMP ,
         };
-        // This loader will execute the ContentProvider's query method on a background thread
-        return new CursorLoader(getContext(),   // Parent activity context
-                TopicsContract.NotesTable.CONTENT_URI,   // Provider content URI to query
-                projection,             // Columns to include in the resulting Cursor
-                null,                   // No selection clause
-                null,                   // No selection arguments
-                null);
+
+        if(currentTopicId !=null){
+
+            String selection = TopicsContract.NotesTable.COLUMN_TOPIC_ID + "=?";
+            String[] selectionArgs = new String[] { currentTopicId };
+
+            return new CursorLoader(getContext(),   // Parent activity context
+                    TopicsContract.NotesTable.CONTENT_URI,   // Provider content URI to query
+                    projection,             // Columns to include in the resulting Cursor
+                    selection,                   // No selection clause
+                    selectionArgs,                   // No selection arguments
+                    null);
+
+        }else{
+            // This loader will execute the ContentProvider's query method on a background thread
+            return new CursorLoader(getContext(),   // Parent activity context
+                    TopicsContract.NotesTable.CONTENT_URI,   // Provider content URI to query
+                    projection,             // Columns to include in the resulting Cursor
+                    null,                   // No selection clause
+                    null,                   // No selection arguments
+                    null);
+        }
+
     }
 
     @Override
