@@ -71,7 +71,7 @@
                 android:id="@+id/fabAddStep"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_menu_camera"
+                android:src="@drawable/ic_fab_steps"
                 fab:fab_label="Add Step"
                 style="@style/MenuButtonsGreen" />
 
@@ -79,7 +79,7 @@
                 android:id="@+id/fabAddNote"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_menu_manage"
+                android:src="@drawable/ic_fab_notes"
                 fab:fab_label="Add Note"
                 style="@style/MenuButtonsGreen" />
 
@@ -87,7 +87,7 @@
                 android:id="@+id/fabAddDoubt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_menu_send"
+                android:src="@drawable/ic_fab_doubts"
                 fab:fab_label="Add Doubt"
                 style="@style/MenuButtonsGreen" />
 
