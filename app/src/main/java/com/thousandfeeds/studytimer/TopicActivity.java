@@ -6,6 +6,7 @@ import android.net.Uri;
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -22,6 +23,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.thousandfeeds.studytimer.database.TopicsContract;
+import com.thousandfeeds.studytimer.fragments.AddNoteFragment;
 import com.thousandfeeds.studytimer.fragments.DoubtsFragment;
 import com.thousandfeeds.studytimer.fragments.NotesFragment;
 import com.thousandfeeds.studytimer.fragments.StepsFragment;
@@ -39,6 +41,7 @@ public class TopicActivity extends AppCompatActivity implements LoaderManager.Lo
     private String currentTopicId;
     private TextView toolbarTitle;
     private Bundle mBundle;
+    private DialogFragment dialogFragment;
     private FloatingActionButton fabAddNote;
     private FloatingActionMenu floatingActionMenu;
 
@@ -75,6 +78,9 @@ public class TopicActivity extends AppCompatActivity implements LoaderManager.Lo
             public void onClick(View view) {
                 Toast.makeText(getApplicationContext(),"hello world",Toast.LENGTH_SHORT).show();
                 floatingActionMenu.close(true);
+                FragmentManager fm = getSupportFragmentManager();
+                dialogFragment = new AddNoteFragment();
+                dialogFragment.show(fm, "Sample Fragment");
             }
         });
 
@@ -187,4 +193,6 @@ public class TopicActivity extends AppCompatActivity implements LoaderManager.Lo
             return mFragmentTitleList.get(position);
         }
     }
-}
+
+    }
+
